@@ -15,3 +15,4 @@ addons/doctype/bin/*.a
 .godot/
 demo_out/
 *.log
+build/
