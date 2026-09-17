@@ -1,0 +1,17 @@
+.sconsign.dblite
+*.o
+*.os
+*.obj
+*.pyc
+__pycache__/
+native/build/
+godot-cpp/bin/
+godot-cpp/gen/
+addons/doctype/bin/*.dylib
+addons/doctype/bin/*.so
+addons/doctype/bin/*.dll
+addons/doctype/bin/*.framework/
+addons/doctype/bin/*.a
+.godot/
+demo_out/
+*.log
