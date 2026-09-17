@@ -14,6 +14,7 @@ var last_link := "-"
 var button_clicks := 0
 var last_button := "-"
 var next_stats := 0.0
+var reported := false
 
 const PAGES := ["overview", "animation", "typography", "about"]
 const PAGE_TITLES := {"overview": "Genel", "animation": "Animasyon", "typography": "Tipografi", "about": "Hakkında"}
@@ -38,6 +39,12 @@ func _process(delta: float) -> void:
 	if clock >= next_stats:
 		next_stats = clock + 0.25
 		refresh_stats()
+		if not reported and clock > 1.0:
+			reported = true
+			var stats: Dictionary = view.call("get_stats")
+			print("Doctype demo: %s / %s, %d quads, parse %.2f ms, layout %.2f ms, draw %.2f ms, surface %s @ %.2fx, error '%s'" % [
+				RenderingServer.get_current_rendering_method(), RenderingServer.get_current_rendering_driver_name(),
+				stats["quads"], stats["parse_ms"], stats["layout_ms"], stats["draw_ms"], stats["surface_pixels"], stats["device_scale"], view.call("get_last_error")])
 
 func _on_anchor_clicked(url: String) -> void:
 	last_link = url
@@ -166,7 +173,7 @@ func overview() -> String:
 		rows += "<p>Satır %d — kaydırılabilir liste (overflow:auto), tekerlek veya sürükleme ile</p>" % (i + 1)
 	return """
 	<div class='card'>
-		<h1>Doctype → Godot</h1>
+		<h1>Doctype for Godot</h1>
 		<p class='sub'>HTML/CSS oyun arayüzü. Layout CPU'da litehtml, çizim GPU'da tek mesh. Sayılar set_text ile yerinde güncelleniyor, parse yok.</p>
 		<div class='stats'>
 			<div class='stat'><b id='stat-fps'>-</b><span>fps</span></div>
